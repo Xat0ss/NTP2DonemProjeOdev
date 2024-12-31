@@ -23,18 +23,18 @@ namespace denemeodev
         {
             using (var context = new OkulContext())
             {
-                // Seçilen dersleri al
+                
                 var secilenDersler = dgvDersler.Rows.Cast<DataGridViewRow>()
                                       .Where(row => Convert.ToBoolean(row.Cells["Secim"].Value) == true)
                                       .Select(row => (int)row.Cells["DersId"].Value)
                                       .ToList();
 
-                // Mevcut dersleri sil
+                
                 var mevcutDersler = context.OgrenciDersleri
                     .Where(od => od.OgrenciId == SecilenOgrenciId);
                 context.OgrenciDersleri.RemoveRange(mevcutDersler);
 
-                // Yeni dersleri ekle
+                
                 foreach (var dersId in secilenDersler)
                 {
                     context.OgrenciDersleri.Add(new OgrenciDers
@@ -53,7 +53,7 @@ namespace denemeodev
         {
             using (var context = new OkulContext())
             {
-                // Öğrencinin bilgilerini al
+                
                 var ogrenci = context.Ogrenciler
                     .Include(o => o.Sinif)
                     .FirstOrDefault(o => o.OgrenciId == SecilenOgrenciId);
@@ -63,7 +63,7 @@ namespace denemeodev
                     lblOgrenciBilgi.Text = $"Adı: {ogrenci.Adi} Soyadı: {ogrenci.Soyadi} Numara: {ogrenci.Numara} Sınıf: {ogrenci.Sinif.Adi}";
                 }
 
-                // Tüm dersleri listele
+                
                 var tumDersler = context.Dersler
                     .Select(d => new
                     {
@@ -71,16 +71,16 @@ namespace denemeodev
                         d.Baslik
                     }).ToList();
 
-                // Öğrencinin seçtiği dersleri al
+                
                 var ogrenciDersler = context.OgrenciDersleri
                     .Where(od => od.OgrenciId == SecilenOgrenciId)
                     .Select(od => od.DersId)
                     .ToList();
 
-                // Dersleri DataGridView'e yükle
+                
                 dgvDersler.DataSource = tumDersler;
 
-                // Seçim için Checkbox sütunu ekle
+                
                 if (!dgvDersler.Columns.Contains("Secim"))
                 {
                     var checkboxColumn = new DataGridViewCheckBoxColumn
@@ -92,7 +92,7 @@ namespace denemeodev
                     dgvDersler.Columns.Add(checkboxColumn);
                 }
 
-                // Öğrencinin seçtiği dersleri işaretle
+                
                 foreach (DataGridViewRow row in dgvDersler.Rows)
                 {
                     int dersId = (int)row.Cells["DersId"].Value;
