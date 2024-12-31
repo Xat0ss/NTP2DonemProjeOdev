@@ -10,12 +10,12 @@ namespace denemeodev
     public class Ogrenci
     {
 
-        public int OgrenciId { get; set; }  // Öğrenci Kimliği
-        public string Adi { get; set; }     // Öğrenci Adı
-        public string Soyadi { get; set; }  // Öğrenci Soyadı
-        public string Numara { get; set; }  // Öğrenci Numarası
-        public int SinifId { get; set; }    // Sınıf Kimliği
-        public virtual Sinif Sinif { get; set; } // İlişkili Sınıf
+        public int OgrenciId { get; set; }  
+        public string Adi { get; set; }     
+        public string Soyadi { get; set; }  
+        public string Numara { get; set; }  
+        public int SinifId { get; set; }  
+        public virtual Sinif Sinif { get; set; } 
         public virtual ICollection<OgrenciDers> OgrenciDersleri { get; set; }
 
 
