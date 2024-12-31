@@ -22,37 +22,37 @@ namespace denemeodev
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // Ogrenci -> Sinif İlişkisi (Bir sınıf, birden fazla öğrenciye sahip olabilir)
+            
             modelBuilder.Entity<Ogrenci>()
                 .HasOne(o => o.Sinif)
                 .WithMany(s => s.Ogrenciler)
                 .HasForeignKey(o => o.SinifId)
-                .OnDelete(DeleteBehavior.Restrict); // Cascade silme engellendi
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // OgrenciDers -> Composite Key (Birleşik Anahtar)
+        
             modelBuilder.Entity<OgrenciDers>()
                 .HasKey(od => new { od.OgrenciId, od.DersId });
 
-            // Ogrenci -> OgrenciDers İlişkisi
+            
             modelBuilder.Entity<OgrenciDers>()
                 .HasOne(od => od.Ogrenci)
                 .WithMany(o => o.OgrenciDersleri)
                 .HasForeignKey(od => od.OgrenciId);
 
-            // Ders -> OgrenciDers İlişkisi
+            
             modelBuilder.Entity<OgrenciDers>()
                 .HasOne(od => od.Ders)
                 .WithMany(d => d.OgrenciDersleri)
                 .HasForeignKey(od => od.DersId);
 
-            // Seed Data (Varsayılan Sınıflar)
+            
             modelBuilder.Entity<Sinif>().HasData(
                 new Sinif { SinifId = 1, Adi = "1. Sınıf", Kapasite = 10 },
                 new Sinif { SinifId = 2, Adi = "2. Sınıf", Kapasite = 10 },
                 new Sinif { SinifId = 3, Adi = "3. Sınıf", Kapasite = 10 }
             );
 
-            // Ders Tablosu Varsayılan Verileri
+            
             modelBuilder.Entity<Ders>().HasData(
                 new Ders { DersId = 1, Baslik = "İnternet Programcılığı" },
                 new Ders { DersId = 2, Baslik = "Görsel Programlama" },
