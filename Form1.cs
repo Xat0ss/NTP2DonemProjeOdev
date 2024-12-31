@@ -17,14 +17,14 @@ namespace denemeodev
 
                 if (ogrenci != null)
                 {
-                    // Ders Seçim Formunu Aç ve Öðrenci ID'sini Gönder
+                    
                     var dersSecimForm = new Form2();
-                    dersSecimForm.SecilenOgrenciId = ogrenci.OgrenciId; // Form2'deki deðiþken
+                    dersSecimForm.SecilenOgrenciId = ogrenci.OgrenciId; 
                     dersSecimForm.ShowDialog();
                 }
                 else
                 {
-                    MessageBox.Show("Lütfen önce bir öðrenci bulun!");
+                    MessageBox.Show("LÃ¼tfen Ã¶nce bir Ã¶Ã°renci bulun!");
                 }
             }
         }
@@ -33,9 +33,9 @@ namespace denemeodev
         {
             using (var context = new OkulContext())
             {
-                cboxsýnýf.DataSource = context.Siniflar.ToList();
-                cboxsýnýf.DisplayMember = "Adi";
-                cboxsýnýf.ValueMember = "SinifId";
+                cboxsÃ½nÃ½f.DataSource = context.Siniflar.ToList();
+                cboxsÃ½nÃ½f.DisplayMember = "Adi";
+                cboxsÃ½nÃ½f.ValueMember = "SinifId";
             }
         }
 
@@ -49,40 +49,40 @@ namespace denemeodev
 
                 try
                 {
-                    // Sýnýf Kontrolü
-                    if (cboxsýnýf.SelectedValue == null)
+                    
+                    if (cboxsÃ½nÃ½f.SelectedValue == null)
                     {
-                        MessageBox.Show("Lütfen bir sýnýf seçin.");
+                        MessageBox.Show("LÃ¼tfen bir sÃ½nÃ½f seÃ§in.");
                         return;
                     }
 
-                    int sinifId = (int)cboxsýnýf.SelectedValue;
+                    int sinifId = (int)cboxsÃ½nÃ½f.SelectedValue;
                     var sinif = context.Siniflar.Include(s => s.Ogrenciler).FirstOrDefault(s => s.SinifId == sinifId);
 
                     if (sinif == null)
                     {
-                        MessageBox.Show("Seçilen sýnýf bulunamadý.");
+                        MessageBox.Show("SeÃ§ilen sÃ½nÃ½f bulunamadÃ½.");
                         return;
                     }
 
                     var mevcutOgrenci = context.Ogrenciler.FirstOrDefault(o => o.Adi == adi && o.Soyadi == soyadi && o.Numara == numara);
                     if (mevcutOgrenci != null)
                     {
-                        MessageBox.Show("Bu öðrenci zaten kayýtlý!");
+                        MessageBox.Show("Bu Ã¶Ã°renci zaten kayÃ½tlÃ½!");
                         return;
                     }
 
-                    // Kapasite Kontrolü
+                
                     if (sinif.Ogrenciler.Count >= sinif.Kapasite)
                     {
-                        MessageBox.Show("Seçilen sýnýfýn kapasitesi dolmuþ!");
+                        MessageBox.Show("SeÃ§ilen sÃ½nÃ½fÃ½n kapasitesi dolmuÃ¾!");
                         return;
                     }
 
-                    // Yeni Öðrenci Ekleme
+                
                     if (string.IsNullOrWhiteSpace(tboxad.Text) || string.IsNullOrWhiteSpace(tboxsoyad.Text) || string.IsNullOrWhiteSpace(tboxNo.Text))
                     {
-                        MessageBox.Show("Lütfen tüm alanlarý doldurun.");
+                        MessageBox.Show("LÃ¼tfen tÃ¼m alanlarÃ½ doldurun.");
                         return;
                     }
 
@@ -97,11 +97,11 @@ namespace denemeodev
                     context.Ogrenciler.Add(yeniOgrenci);
                     context.SaveChanges();
 
-                    MessageBox.Show("Öðrenci baþarýyla kaydedildi.");
+                    MessageBox.Show("Ã–Ã°renci baÃ¾arÃ½yla kaydedildi.");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Bir hata oluþtu: {ex.Message}");
+                    MessageBox.Show($"Bir hata oluÃ¾tu: {ex.Message}");
                 }
             }
         }
@@ -119,18 +119,18 @@ namespace denemeodev
                     {
                         tboxad.Text = ogrenci.Adi;
                         tboxsoyad.Text = ogrenci.Soyadi;
-                        cboxsýnýf.SelectedValue = ogrenci.SinifId;
+                        cboxsÃ½nÃ½f.SelectedValue = ogrenci.SinifId;
 
-                        MessageBox.Show("Öðrenci bilgileri yüklendi.");
+                        MessageBox.Show("Ã–Ã°renci bilgileri yÃ¼klendi.");
                     }
                     else
                     {
-                        MessageBox.Show("Öðrenci bulunamadý.");
+                        MessageBox.Show("Ã–Ã°renci bulunamadÃ½.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Geçerli bir öðrenci numarasý girin.");
+                    MessageBox.Show("GeÃ§erli bir Ã¶Ã°renci numarasÃ½ girin.");
                 }
             }
         }
@@ -148,19 +148,19 @@ namespace denemeodev
                     {
                         ogrenci.Adi = tboxad.Text;
                         ogrenci.Soyadi = tboxsoyad.Text;
-                        ogrenci.SinifId = (int)cboxsýnýf.SelectedValue;
+                        ogrenci.SinifId = (int)cboxsÃ½nÃ½f.SelectedValue;
 
                         context.SaveChanges();
-                        MessageBox.Show("Öðrenci bilgileri baþarýyla güncellendi.");
+                        MessageBox.Show("Ã–Ã°renci bilgileri baÃ¾arÃ½yla gÃ¼ncellendi.");
                     }
                     else
                     {
-                        MessageBox.Show("Öðrenci bulunamadý.");
+                        MessageBox.Show("Ã–Ã°renci bulunamadÃ½.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Geçerli bir öðrenci numarasý girin.");
+                    MessageBox.Show("GeÃ§erli bir Ã¶Ã°renci numarasÃ½ girin.");
                 }
             }
         }
